@@ -1,2 +1,2 @@
 array = ARGV
-p array.sample()
+p array.sample

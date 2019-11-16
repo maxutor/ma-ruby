@@ -1,18 +1,8 @@
-class NotANumberError < StandardError
-  def initialize(obj)
-    super("#{obj} not a number")
-  end
-end
-
 class PseudoInt
-
   attr_reader :num
+
   def initialize(num)
-    if num.is_a?(Numeric)
-      @num = num
-    else
-      raise NotANumberError.new(num)
-    end
+    @num = num
   end
 
   def +(other_pint)
@@ -32,8 +22,24 @@ class PseudoInt
   end
 end
 
-pint1 = PseudoInt.new(ARGV[0].to_i)
-pint2 = PseudoInt.new(ARGV[1].to_i)
+def is_i?(num)
+  num =~ /\A[-+]?[0-9]+\z/
+end
+
+if is_i?(ARGV[0])
+  pint1 = PseudoInt.new(ARGV[0].to_i)
+else
+  puts "Error: #{ARGV[0]} is not a number"
+  return
+end
+
+if is_i?(ARGV[1])
+  pint2 = PseudoInt.new(ARGV[1].to_i)
+else
+  puts "Error: #{ARGV[1]} is not a number"
+  return
+end
+
 p pint1 + pint2
 p pint1 - pint2
 p pint1 / pint2

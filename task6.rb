@@ -49,4 +49,6 @@ when 'division'
   p pint1 / pint2
 when 'multiplication'
   p pint1 * pint2
+else
+  p "There is no such operation: #{ARGV[2]}"
 end

@@ -40,7 +40,13 @@ else
   return
 end
 
-p pint1 + pint2
-p pint1 - pint2
-p pint1 / pint2
-p pint1 * pint2
+case ARGV[2]
+when 'sum'
+  p pint1 + pint2
+when 'difference'
+  p pint1 - pint2
+when 'division'
+  p pint1 / pint2
+when 'multiplication'
+  p pint1 * pint2
+end

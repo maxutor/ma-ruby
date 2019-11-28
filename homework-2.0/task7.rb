@@ -24,9 +24,7 @@ class Validator
         end
       end
     end
-    return true if @stack.empty?
-
-    false
+    @stack.empty?
   end
 
   private
@@ -40,9 +38,7 @@ class Validator
   end
 
   def closes?(opener, closer)
-    return false unless BRACKETS[opener] == closer
-
-    true
+    BRACKETS[opener] == closer
   end
 end
 

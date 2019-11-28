@@ -4,14 +4,15 @@ class ArrayFilter
   end
 
   def filter
-    @arr.select { |item| (to_numeric(item) % 2).zero? }
+    @arr.select do |item|
+      num?(item.to_s) && (item.to_f % 2).zero?
+    end
   end
 
   private
 
-  def to_numeric(thing)
-    return thing.to_s.to_i if thing.to_s == thing.to_s.to_i.to_s
-    return thing.to_s.to_f if thing.to_s == thing.to_s.to_f.to_s
+  def num?(num)
+    num =~ /\A[-+]?[0-9]+(\.[0-9]+)?\z/
   end
 end
 

@@ -1,10 +1,5 @@
 require './config/initializers/database'
-require './app/models/shop'
-require './app/models/category'
-require './app/models/feedback'
-require './app/models/product'
-require './app/models/question'
-require './app/models/tag'
+Dir['./app/models/*.rb'].each { |f| require f.gsub('.rb', '') }
 
 #shop = Shop.new(
 #  domain: 'rozetka.com.ua',
@@ -15,9 +10,9 @@ require './app/models/tag'
 #)
 #shop.save
 #
-#category1 = Category.new(title: 'boots')
+#category1 = Category.create(title: 'boots', shop: shop)
 #category1.save
-#category2 = Category.new(title: 'jackets')
+#category2 = Category.create(title: 'jackets', shop: shop)
 #category2.save
 #
 #tag1 = Tag.create(title: 'winter')
@@ -48,6 +43,13 @@ require './app/models/tag'
 #  product: product3
 #)
 #first_question.save
+#
+#product2 = Product.find(2)
+#second_question = Question.new(
+#  comment: "Why so cheap???",
+#  product: product2
+#)
+#second_question.save
 
 def sort_tags_products_by_price(tag_name)
   tag = Tag.find_by(title: tag_name)
@@ -55,9 +57,8 @@ def sort_tags_products_by_price(tag_name)
 end
 
 def products_in_shop_with_category(category_name, shop_name)
-  category = Category.find_by(title: category_name)
-  shop = Shop.where(name: shop_name)
-  category.products.where(shop: shop).each { | p | puts "#{shop_name} has a category - #{category_name}: #{p.title}" }
+  products = Product.joins(category: :shop).where(shops: { name: shop_name })
+  products.each { | p | puts "#{shop_name} has a category - #{category_name}: #{p.title}" }
 end
 
 def all_products_in_shop(shop_name)
@@ -72,16 +73,14 @@ def all_feedbacks
 end
 
 def all_opened_question
-  questions = Question.all
+  questions = Question.where(is_open: true)
   questions.each do |q|
-    if q.is_open
-      puts "#{q.username} about #{q.product.title}: #{q.comment}"
-    end
+    puts "#{q.username} about #{q.product.title}: #{q.comment}"
   end
 end
 
-def answer_the_question(num_of_question, answer)
-  question = Question.find(num_of_question)
+def answer_the_question(question_id, answer)
+  question = Question.find(question_id)
   question.update(admin_answer: answer)
 end
 
@@ -95,7 +94,7 @@ all_feedbacks
 p '//'
 all_opened_question
 p '//'
-answer_the_question(2, 'Of course')
+answer_the_question(8, 'Of course')
 p '//'
 all_opened_question
 

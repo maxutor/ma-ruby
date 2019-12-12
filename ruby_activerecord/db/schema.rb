@@ -10,19 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_08_162041) do
+ActiveRecord::Schema.define(version: 2019_12_12_202212) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "categories", force: :cascade do |t|
     t.string "title"
+    t.bigint "shop_id"
+    t.index ["shop_id"], name: "index_categories_on_shop_id"
   end
 
   create_table "feedbacks", force: :cascade do |t|
     t.integer "rate"
     t.string "comment"
-    t.string "username"
+    t.string "username", default: "Anon", null: false
     t.bigint "product_id"
     t.index ["product_id"], name: "index_feedbacks_on_product_id"
   end
@@ -45,7 +47,7 @@ ActiveRecord::Schema.define(version: 2019_12_08_162041) do
 
   create_table "questions", force: :cascade do |t|
     t.string "comment"
-    t.string "username"
+    t.string "username", default: "Anon", null: false
     t.boolean "is_open"
     t.string "admin_answer"
     t.bigint "product_id"

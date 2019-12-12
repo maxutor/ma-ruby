@@ -4,6 +4,7 @@ class CreateTags < ActiveRecord::Migration[5.1]
       t.string :title
     end
   end
+
   def down
     drop_table :tags
   end

@@ -11,7 +11,7 @@ services:
     depends_on:
       - db
   db:
-    container_name: db-test
+    container_name: db
     image: postgres:10-alpine
     ports:
     - 5439:5432

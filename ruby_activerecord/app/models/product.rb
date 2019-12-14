@@ -14,6 +14,6 @@ class Product < ActiveRecord::Base
   private
 
   def capitalize_productname
-    title = title.capitalize
+    self.title = title.capitalize
   end
 end

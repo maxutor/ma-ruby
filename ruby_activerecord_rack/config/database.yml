@@ -1,0 +1,6 @@
+development:
+  adapter: postgresql
+  host: db2
+  database: ruby_development
+  username: postgres
+  password:
